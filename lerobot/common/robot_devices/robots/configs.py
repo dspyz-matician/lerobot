@@ -69,9 +69,13 @@ class ManipulatorRobotConfig(RobotConfig):
                 if not cam.mock:
                     cam.mock = True
 
-        if self.max_relative_target is not None and isinstance(self.max_relative_target, Sequence):
+        if self.max_relative_target is not None and isinstance(
+            self.max_relative_target, Sequence
+        ):
             for name in self.follower_arms:
-                if len(self.follower_arms[name].motors) != len(self.max_relative_target):
+                if len(self.follower_arms[name].motors) != len(
+                    self.max_relative_target
+                ):
                     raise ValueError(
                         f"len(max_relative_target)={len(self.max_relative_target)} but the follower arm with name {name} has "
                         f"{len(self.follower_arms[name].motors)} motors. Please make sure that the "
@@ -103,22 +107,22 @@ class AlohaRobotConfig(ManipulatorRobotConfig):
 
     leader_arms: dict[str, MotorsBusConfig] = field(
         default_factory=lambda: {
-            "left": DynamixelMotorsBusConfig(
-                # window_x
-                port="/dev/ttyDXL_leader_left",
-                motors={
-                    # name: (index, model)
-                    "waist": [1, "xm430-w350"],
-                    "shoulder": [2, "xm430-w350"],
-                    "shoulder_shadow": [3, "xm430-w350"],
-                    "elbow": [4, "xm430-w350"],
-                    "elbow_shadow": [5, "xm430-w350"],
-                    "forearm_roll": [6, "xm430-w350"],
-                    "wrist_angle": [7, "xm430-w350"],
-                    "wrist_rotate": [8, "xl430-w250"],
-                    "gripper": [9, "xc430-w150"],
-                },
-            ),
+            # "left": DynamixelMotorsBusConfig(
+            #     # window_x
+            #     port="/dev/ttyDXL_leader_left",
+            #     motors={
+            #         # name: (index, model)
+            #         "waist": [1, "xm430-w350"],
+            #         "shoulder": [2, "xm430-w350"],
+            #         "shoulder_shadow": [3, "xm430-w350"],
+            #         "elbow": [4, "xm430-w350"],
+            #         "elbow_shadow": [5, "xm430-w350"],
+            #         "forearm_roll": [6, "xm430-w350"],
+            #         "wrist_angle": [7, "xm430-w350"],
+            #         "wrist_rotate": [8, "xl430-w250"],
+            #         "gripper": [9, "xc430-w150"],
+            #     },
+            # ),
             "right": DynamixelMotorsBusConfig(
                 # window_x
                 port="/dev/ttyDXL_leader_right",
@@ -138,72 +142,72 @@ class AlohaRobotConfig(ManipulatorRobotConfig):
         }
     )
 
-    follower_arms: dict[str, MotorsBusConfig] = field(
-        default_factory=lambda: {
-            "left": DynamixelMotorsBusConfig(
-                port="/dev/ttyDXL_follower_left",
-                motors={
-                    # name: (index, model)
-                    "waist": [1, "xm540-w270"],
-                    "shoulder": [2, "xm540-w270"],
-                    "shoulder_shadow": [3, "xm540-w270"],
-                    "elbow": [4, "xm540-w270"],
-                    "elbow_shadow": [5, "xm540-w270"],
-                    "forearm_roll": [6, "xm540-w270"],
-                    "wrist_angle": [7, "xm540-w270"],
-                    "wrist_rotate": [8, "xm430-w350"],
-                    "gripper": [9, "xm430-w350"],
-                },
-            ),
-            "right": DynamixelMotorsBusConfig(
-                port="/dev/ttyDXL_follower_right",
-                motors={
-                    # name: (index, model)
-                    "waist": [1, "xm540-w270"],
-                    "shoulder": [2, "xm540-w270"],
-                    "shoulder_shadow": [3, "xm540-w270"],
-                    "elbow": [4, "xm540-w270"],
-                    "elbow_shadow": [5, "xm540-w270"],
-                    "forearm_roll": [6, "xm540-w270"],
-                    "wrist_angle": [7, "xm540-w270"],
-                    "wrist_rotate": [8, "xm430-w350"],
-                    "gripper": [9, "xm430-w350"],
-                },
-            ),
-        }
-    )
+    # follower_arms: dict[str, MotorsBusConfig] = field(
+    #     default_factory=lambda: {
+    #         "left": DynamixelMotorsBusConfig(
+    #             port="/dev/ttyDXL_follower_left",
+    #             motors={
+    #                 # name: (index, model)
+    #                 "waist": [1, "xm540-w270"],
+    #                 "shoulder": [2, "xm540-w270"],
+    #                 "shoulder_shadow": [3, "xm540-w270"],
+    #                 "elbow": [4, "xm540-w270"],
+    #                 "elbow_shadow": [5, "xm540-w270"],
+    #                 "forearm_roll": [6, "xm540-w270"],
+    #                 "wrist_angle": [7, "xm540-w270"],
+    #                 "wrist_rotate": [8, "xm430-w350"],
+    #                 "gripper": [9, "xm430-w350"],
+    #             },
+    #         ),
+    #         "right": DynamixelMotorsBusConfig(
+    #             port="/dev/ttyDXL_follower_right",
+    #             motors={
+    #                 # name: (index, model)
+    #                 "waist": [1, "xm540-w270"],
+    #                 "shoulder": [2, "xm540-w270"],
+    #                 "shoulder_shadow": [3, "xm540-w270"],
+    #                 "elbow": [4, "xm540-w270"],
+    #                 "elbow_shadow": [5, "xm540-w270"],
+    #                 "forearm_roll": [6, "xm540-w270"],
+    #                 "wrist_angle": [7, "xm540-w270"],
+    #                 "wrist_rotate": [8, "xm430-w350"],
+    #                 "gripper": [9, "xm430-w350"],
+    #             },
+    #         ),
+    #     }
+    # )
 
-    # Troubleshooting: If one of your IntelRealSense cameras freeze during
-    # data recording due to bandwidth limit, you might need to plug the camera
-    # on another USB hub or PCIe card.
-    cameras: dict[str, CameraConfig] = field(
-        default_factory=lambda: {
-            "cam_high": IntelRealSenseCameraConfig(
-                serial_number=128422271347,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_low": IntelRealSenseCameraConfig(
-                serial_number=130322270656,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_left_wrist": IntelRealSenseCameraConfig(
-                serial_number=218622272670,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-            "cam_right_wrist": IntelRealSenseCameraConfig(
-                serial_number=130322272300,
-                fps=30,
-                width=640,
-                height=480,
-            ),
-        }
-    )
+    # # Troubleshooting: If one of your IntelRealSense cameras freeze during
+    # # data recording due to bandwidth limit, you might need to plug the camera
+    # # on another USB hub or PCIe card.
+    # cameras: dict[str, CameraConfig] = field(
+    #     default_factory=lambda: {
+    #         "cam_high": IntelRealSenseCameraConfig(
+    #             serial_number=128422271347,
+    #             fps=30,
+    #             width=640,
+    #             height=480,
+    #         ),
+    #         "cam_low": IntelRealSenseCameraConfig(
+    #             serial_number=130322270656,
+    #             fps=30,
+    #             width=640,
+    #             height=480,
+    #         ),
+    #         "cam_left_wrist": IntelRealSenseCameraConfig(
+    #             serial_number=218622272670,
+    #             fps=30,
+    #             width=640,
+    #             height=480,
+    #         ),
+    #         "cam_right_wrist": IntelRealSenseCameraConfig(
+    #             serial_number=130322272300,
+    #             fps=30,
+    #             width=640,
+    #             height=480,
+    #         ),
+    #     }
+    # )
 
     mock: bool = False
 
@@ -611,3 +615,51 @@ class LeKiwiRobotConfig(RobotConfig):
     )
 
     mock: bool = False
+
+
+@RobotConfig.register_subclass("widowx")
+@dataclass
+class WidowxRobotConfig(ManipulatorRobotConfig):
+    # `max_relative_target` limits the magnitude of the relative positional target vector for safety purposes.
+    # Set this to a positive scalar to have the same value for all motors, or a list that is the same length as
+    # the number of motors in your follower arms.
+    max_relative_target: int | None = None
+
+    leader_arms: dict[str, MotorsBusConfig] = field(
+        default_factory=lambda: {
+            "main": DynamixelMotorsBusConfig(
+                port="/dev/ttyDXL_leader_right",
+                motors={
+                    # name: (index, model)
+                    "waist": [1, "xm430-w350"],
+                    "shoulder": [2, "xm430-w350"],
+                    "shoulder_shadow": [3, "xm430-w350"],
+                    "elbow": [4, "xm430-w350"],
+                    "elbow_shadow": [5, "xm430-w350"],
+                    "forearm_roll": [6, "xm430-w350"],
+                    "wrist_angle": [7, "xm430-w350"],
+                    "wrist_rotate": [8, "xl430-w250"],
+                    "gripper": [9, "xl430-w250"],
+                },
+            ),
+        }
+    )
+
+#     follower_arms: dict[str, MotorsBusConfig] = field(
+#         default_factory=lambda: {
+#             "main": DynamixelMotorsBusConfig(
+#                 port="/dev/ttyUSB1",
+#                 motors={
+#                     # name: (index, model)
+#                     "shoulder_pan": [1, "xl430-w250"],
+#                     "shoulder_lift": [2, "xl430-w250"],
+#                     "elbow_flex": [3, "xl330-m288"],
+#                     "wrist_flex": [4, "xl330-m288"],
+#                     "wrist_roll": [5, "xl330-m288"],
+#                     "gripper": [6, "xl330-m288"],
+#                 },
+#             ),
+#         }
+#     )
+
+#     mock: bool = False
