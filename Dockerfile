@@ -13,20 +13,14 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     sudo
 
-ARG UID=1000
-ARG GID=1000
-
 RUN echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-RUN groupadd -g $GID lerobotd && \
-    useradd -m -u $UID -g $GID lerobotd
+USER ubuntu
 
-USER lerobotd
+RUN python3 -m venv /home/ubuntu/venv
 
-RUN python3 -m venv /home/lerobotd/venv
+RUN /home/ubuntu/venv/bin/pip install poetry setuptools
+COPY requirements.txt /home/ubuntu/lerobot/
+RUN /home/ubuntu/venv/bin/pip install -r /home/ubuntu/lerobot/requirements.txt --no-build-isolation
 
-RUN /home/lerobotd/venv/bin/pip install poetry setuptools
-COPY requirements.txt /home/lerobotd/lerobot/
-RUN /home/lerobotd/venv/bin/pip install -r /home/lerobotd/lerobot/requirements.txt --no-build-isolation
-
-WORKDIR /home/lerobotd/lerobot
+WORKDIR /home/ubuntu/lerobot
