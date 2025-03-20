@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     ffmpeg \
     git \
+    git-lfs \
     libgl1-mesa-dev \
     libglib2.0-dev \
     libpython3-dev \
